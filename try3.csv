@@ -1,0 +1,5 @@
+Accident_Number,Event_Date,Location,Country,Latitude,Longitude,Airport_Code,Airport_Name,Injury_Severity,Aircraft_Damage,Registration_Number,Make,Model,Schedule,Air_Carrier,Total_Fatal_Injuries,Total_Serious_Injuries,Total_Uninjured,Weather_Condition,Broad_Phase_of_Flight
+DCA10CA018,12/18/2009,"Dallas, TX",United States,32.896944,-97.038055,DFW,Dallas/Fort Worth Intl Airport,Non-Fatal,Substantial,N515AE,Bombardier,CL-600,SCHD,American Eagle,0,0,3,VMC,STANDING
+DCA11CA084A,7/14/2011,"Boston, MA",United States,42.353333,-71.014444,BOS,GENERAL EDWARD LAWRENCE LOGAN,Non-Fatal,Substantial,N132EV,Bombardier,CL-600,SCHD,ATLANTIC SOUTHEAST AIRLINES INC (DBA: ATLANTIC SOUTHEAST AIRLINES -Delta Connection),0,0,291,VMC,STANDING
+ATL02FA113,6/2/2002,"Atlanta, GA",United States,33.645277,-84.433056,ATL,Atlanta Hartsfield,Non-Fatal,Substantial,N849AS,Bombardier,CL-600,SCHD,"Atlantic Southeast Airlines, Inc.",0,0,53,VMC,LANDING
+DCA09FA033,2/28/2009,"Tallahassee, FL",United States,30.396389,-84.350278,TLH,Tallahassee Regional Airport,Non-Fatal,Substantial,N830AS,Bombardier,CRJ-200,SCHD,"Atlantic Southeast Airlines, Inc.",0,0,2,,STANDING
