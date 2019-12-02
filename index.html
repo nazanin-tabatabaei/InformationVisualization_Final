@@ -80,6 +80,8 @@ var svg = d3.select("body")
 			.attr("height", height);
         
 
+
+
 // Append Div for tooltip to SVG
 var div = d3.select("body")
 		    .append("div")   
@@ -94,6 +96,11 @@ d3.csv("aircraft_incidents.csv", function(data) {
 d3.json("us-states.json", function(json) {
 
 var countObj = {};
+
+
+
+      
+
 
 // count how much each city occurs in list and store in countObj
 data.forEach(function(d) {
@@ -111,6 +118,8 @@ data.forEach(function(d) {
     d.count = countObj[city];
     var dataValue=countObj[city]/100;
 
+    
+
 
     for (var j = 0; j < json.features.length; j++)  {
 		var jsonState = json.features[j].properties.name;
@@ -126,11 +135,145 @@ data.forEach(function(d) {
 	}
 });
 
-console.log(countObj)
+//console.log(countObj['United States'])
 
 for (var i = 0; i < countObj.length; i++) {
 	console.log("hi");
 }
+
+for(var key in countObj) {
+  var value = countObj[key];
+  console.log(value)
+  // do something with "key" and "value" variables
+}
+
+var dlist = d3.entries(countObj);
+console.log(dlist[0].value)
+/*
+var p = d3.select("body").selectAll("p")
+   .data(countObj)
+   .enter()
+   .append("p")
+   .text(function (d,i) {
+    return "i = " + i + " d = "+d;
+   });
+*/
+/*
+	var dlist = d3.entries(countObj)
+    var max = d3.max(dlist, function(x) {
+        return x.value;
+      });
+      console.log(max);
+
+      var xscale = d3.scaleLinear()
+      .domain([0, max])
+      .range([0, 500])
+
+      //console.log(xscale);
+
+
+	var heightScale= d3.scaleLinear()
+		.domain([max,0])
+		.range([0,500]);
+
+	var axis=d3.axisLeft()
+		.ticks(5)
+		.scale(heightScale)
+		.tickFormat(function (d) {
+      if ((d / 1000) >= 1) {
+        d = d / 1000 + "K";
+      }
+      return d;
+    });
+
+
+
+svg2.selectAll("rect")
+		.data(dlist)
+		.enter()
+			.append("g")
+			.append("rect")
+			.attr("height",function(x){return xscale(x.value)})
+			.attr("width",45)
+			.attr("x",function(x,i){return i*80+10})
+			.attr("y",function(x){return 550-xscale(x.value)})
+			.attr("fill","blue")
+			.attr("transform","translate(80,0)")
+
+*/
+
+
+
+/*
+var svg2 = d3.select("body")
+			.append("svg")
+			.attr("width", width)
+			.attr("height", height/2);
+
+
+
+  // X axis: scale and draw:
+  var x = d3.scaleLinear()
+      .domain([0, 1000])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+      .range([0, width]);
+  svg2.append("g")
+      .attr("transform", "translate(0," + 0 + ")")
+      .call(d3.axisBottom(x));
+
+  // set the parameters for the histogram
+  var histogram = d3.histogram()
+      .value(function(dlist) { return dlist.value;
+      console.log(dlist.value) })   // I need to give the vector of value
+      .domain(x.domain())  // then the domain of the graphic
+      .thresholds(x.ticks(70)); // then the numbers of bins
+
+  // And apply this function to data to get the bins
+  var bins = histogram(data);
+
+  // Y axis: scale and draw:
+  var y = d3.scaleLinear()
+      .range([height, 0]);
+      y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
+  svg2.append("g")
+      .call(d3.axisLeft(y));
+
+  // append the bar rectangles to the svg element
+  svg2.selectAll("rect")
+      .data(bins)
+      .enter()
+      .append("rect")
+        .attr("x", 1)
+        .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(0) + ")"; })
+        .attr("width", function(d) { return 10; })
+        .attr("height", function(d) { return 10 })
+        .style("fill", "#69b3a2")
+*/
+
+var svg2 = d3.select("body")
+			.append("svg")
+			.attr("width", width)
+			.attr("height", 350)
+			.attr("class", "bar-chart");
+var barPadding = 2;  
+var barWidth = (width / dlist.length);
+
+var barChart = svg2.selectAll("rect")  
+    .data(dlist)  
+    .enter()  
+    .append("rect")  
+    .attr("y", function(d) {  
+        return 350 - d.value/3 
+    })  
+    .attr("height", function(d) {  
+        return d.value/3;  
+    })  
+    .attr("width", barWidth - barPadding)  
+    .attr("transform", function (d, i) {  
+         var translate = [barWidth * i, 0];  
+         return "translate("+ translate +")";  
+    });
+
+
 
 
 
