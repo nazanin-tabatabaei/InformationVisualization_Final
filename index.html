@@ -4,7 +4,22 @@
 <meta charset="utf-8">
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <style type="text/css">
+.selected {
+    fill: red !important;
+    r: 10;
+}
 
+#map {
+    width: 1100px;
+
+    float:left; /* add this */
+    border: 1px solid red;
+}
+#basic_info {
+
+    float:left;
+    overflow: hidden; /* if you don't want #second to wrap below #first */
+}
 /* On mouse hover, lighten state color */
 path:hover {
 	fill-opacity: .7;
@@ -39,6 +54,21 @@ body {
 </style>
 </head>
 <body>
+	<div id="map"></div>
+	<div id="basic_info">
+			<strong>Accident Number:</strong> <span id="Accident_Number"></span><br/>
+            <strong>Event Date:</strong> <span id="Event_Date"></span><br/>
+            <strong>Location:</strong> <span id="Location"></span><br/>
+            <strong>Airport Name:</strong> <span id="Airport_Name"></span><br/>
+            <strong>Air Carrier:</strong> <span id="Air_Carrier"></span><br/>
+            <strong>Weather Condition:</strong> <span id="Weather_Condition"></span><br/>
+            <strong>Injury Severity:</strong> <span id="Injury_Severity"></span><br/>
+            <strong>Total Fatal Injuries</strong> <span id="Total_Fatal_Injuries"></span><br/>
+            <strong>Total Serious Injuries:</strong> <span id="Total_Serious_Injuries"></span><br/>
+            <strong>Total Uninjured:</strong> <span id="Total_Uninjured"></span><br/>
+        </div>
+
+</body>
 <script type="text/javascript">
 
 /*  This visualization was made possible by modifying code provided by:
@@ -54,13 +84,13 @@ http://bl.ocks.org/mbostock/3888852  */
 
 		
 //Width and height of map
-var width = 1200;
-var height = 500;
+var width = 1100;
+var height = 550;
 
 // D3 Projection
 var projection = d3.geoMercator() 
 				   .translate([width/2, height/2])    // translate to center of screen
-				   .scale([200]);          // scale things down so see entire US
+				   .scale([170]);          // scale things down so see entire US
         
 // Define path generator
 var path = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
@@ -74,7 +104,7 @@ var color = d3.scaleLinear()
 var legendText = ["Cities Lived", "States Lived", "States Visited", "Nada"];
 
 //Create SVG element and append map to the SVG
-var svg = d3.select("body")
+var svg = d3.select("#map")
 			.append("svg")
 			.attr("width", width)
 			.attr("height", height);
@@ -83,7 +113,7 @@ var svg = d3.select("body")
 
 
 // Append Div for tooltip to SVG
-var div = d3.select("body")
+var div = d3.select("#map")
 		    .append("div")   
     		.attr("class", "tooltip")               
     		.style("opacity", 0);
@@ -342,11 +372,25 @@ svg.selectAll("circle")
     	div.transition()        
       	   .duration(200)      
            .style("opacity", .9);      
-           div.text(d.Location)
+           div.text(d.Accident_Number)
            .style("left", (d3.event.pageX) + "px")     
            .style("top", (d3.event.pageY - 28) + "px")
-           .style("font-size", "10px");    
-	})   
+           .style("font-size", "10px");
+
+	})
+
+	.on("click", function(d, i) {
+
+		d3.selectAll("circle")
+                        .classed("selected", function(c, j) {
+                            return j === i;
+                        });
+                    create_basic_info(i);
+
+
+                })
+
+
 
     // fade out tooltip on mouse out               
     .on("mouseout", function(d) {       
@@ -354,8 +398,33 @@ svg.selectAll("circle")
            .duration(500)      
            .style("opacity", 0);   
     });
+
+
+
+
+
+
+
+function create_basic_info(index) {
+        d3.select("#Accident_Number").text(data[index]["Accident_Number"]);
+        d3.select("#Event_Date").text(data[index]["Event_Date"]);
+        d3.select("#Location").text(data[index]["Location"]);
+        d3.select("#Airport_Name").text(data[index]["Airport_Name"]);
+        d3.select("#Air_Carrier").text(data[index]["Air_Carrier"]);
+        d3.select("#Weather_Condition").text(data[index]["Weather_Condition"]);
+        d3.select("#Injury_Severity").text(data[index]["Injury_Severity"]);
+        d3.select("#Total_Fatal_Injuries").text(data[index]["Total_Fatal_Injuries"]);
+        d3.select("#Total_Serious_Injuries").text(data[index]["Total_Serious_Injuries"]);
+        d3.select("#Total_Uninjured").text(data[index]["Total_Uninjured"]);
+    }
+
+
 });  
-        
+  
+
+
+
+     
 // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
 var legend = d3.select("body").append("svg")
       			.attr("class", "legend")
