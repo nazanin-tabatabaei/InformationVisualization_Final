@@ -54,7 +54,7 @@ http://bl.ocks.org/mbostock/3888852  */
 
 		
 //Width and height of map
-var width = 960;
+var width = 1200;
 var height = 500;
 
 // D3 Projection
@@ -252,7 +252,7 @@ var svg2 = d3.select("body")
 var svg2 = d3.select("body")
 			.append("svg")
 			.attr("width", width)
-			.attr("height", 350)
+			.attr("height", 380)
 			.attr("class", "bar-chart");
 var barPadding = 2;  
 var barWidth = (width / dlist.length);
@@ -261,11 +261,20 @@ var barChart = svg2.selectAll("rect")
     .data(dlist)  
     .enter()  
     .append("rect")  
-    .attr("y", function(d) {  
-        return 350 - d.value/3 
+    .attr("y", function(d) {
+    	if(d.value>0){
+    		return 380 - d.value/3-5 
+    	}  else{
+    		return 380 - d.value/3 
+    	}
+        
     })  
-    .attr("height", function(d) {  
-        return d.value/3;  
+    .attr("height", function(d) { 
+    if(d.value>0){ 
+        return d.value/3+5;  }
+        else{
+        	return d.value/3; 
+        }
     })  
     .attr("width", barWidth - barPadding)  
     .attr("transform", function (d, i) {  
@@ -293,12 +302,14 @@ svg.selectAll("path")
 
 	if (value) {
 	//If value exists…
-	return color(value);
+	return color(value)
 	} else {
 	//If value is undefined…
 	return "rgb(213,222,217)";
 	}
-});
+
+})
+	.style("opacity", 0.85);
 
 		 
 // Map the cities I have lived in!
