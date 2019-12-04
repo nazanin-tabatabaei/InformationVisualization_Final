@@ -66,6 +66,9 @@ body {
 </style>
 </head>
 <body>
+    <form>
+        Cutoff of Year (Ex. 01 or 95)<input id="cutoff" type="text" ><br>
+    </form>
 	<div id="map"></div>
 	<div id="basic_info">
 			<strong>Accident Number:</strong> <span id="Accident_Number"></span><br/>
@@ -94,21 +97,21 @@ http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
 Mike Bostock, Pie Chart Legend
 http://bl.ocks.org/mbostock/3888852  */
 
-		
+
 //Width and height of map
 var width = 1100;
 var height = 550;
 
 // D3 Projection
-var projection = d3.geoMercator() 
+var projection = d3.geoMercator()
 				   .translate([width/2, height/2])    // translate to center of screen
 				   .scale([170]);          // scale things down so see entire US
-        
+
 // Define path generator
 var path = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
 		  	 .projection(projection);  // tell path generator to use albersUsa projection
 
-		
+
 // Define linear scale for output
 var color = d3.scaleLinear()
 			  .range(["rgb(20,0,0)", "rgb(255,0,0)"]);
@@ -120,14 +123,14 @@ var svg = d3.select("#map")
 			.append("svg")
 			.attr("width", width)
 			.attr("height", height);
-        
+
 
 
 
 // Append Div for tooltip to SVG
 var div = d3.select("#map")
-		    .append("div")   
-    		.attr("class", "tooltip")               
+		    .append("div")
+    		.attr("class", "tooltip")
     		.style("opacity", 0);
 
 // Load in my states data!
@@ -141,7 +144,7 @@ var countObj = {};
 
 
 
-      
+
 
 
 // count how much each city occurs in list and store in countObj
@@ -160,7 +163,7 @@ data.forEach(function(d) {
     d.count = countObj[city];
     var dataValue=countObj[city]/100;
 
-    
+
 
 
     for (var j = 0; j < json.features.length; j++)  {
@@ -169,7 +172,7 @@ data.forEach(function(d) {
 		if (dataState == jsonState) {
 
 		// Copy the data value into the JSON
-		json.features[j].properties.visited = dataValue; 
+		json.features[j].properties.visited = dataValue;
 
 		// Stop looking through the JSON
 		break;
@@ -180,148 +183,50 @@ data.forEach(function(d) {
 //console.log(countObj['United States'])
 
 for (var i = 0; i < countObj.length; i++) {
-	console.log("hi");
+	// console.log("hi");
 }
 
 for(var key in countObj) {
   var value = countObj[key];
-  console.log(value)
-  // do something with "key" and "value" variables
+
 }
 
 var dlist = d3.entries(countObj);
-console.log(dlist[0].value)
-/*
-var p = d3.select("body").selectAll("p")
-   .data(countObj)
-   .enter()
-   .append("p")
-   .text(function (d,i) {
-    return "i = " + i + " d = "+d;
-   });
-*/
-/*
-	var dlist = d3.entries(countObj)
-    var max = d3.max(dlist, function(x) {
-        return x.value;
-      });
-      console.log(max);
-
-      var xscale = d3.scaleLinear()
-      .domain([0, max])
-      .range([0, 500])
-
-      //console.log(xscale);
-
-
-	var heightScale= d3.scaleLinear()
-		.domain([max,0])
-		.range([0,500]);
-
-	var axis=d3.axisLeft()
-		.ticks(5)
-		.scale(heightScale)
-		.tickFormat(function (d) {
-      if ((d / 1000) >= 1) {
-        d = d / 1000 + "K";
-      }
-      return d;
-    });
 
 
 
-svg2.selectAll("rect")
-		.data(dlist)
-		.enter()
-			.append("g")
-			.append("rect")
-			.attr("height",function(x){return xscale(x.value)})
-			.attr("width",45)
-			.attr("x",function(x,i){return i*80+10})
-			.attr("y",function(x){return 550-xscale(x.value)})
-			.attr("fill","blue")
-			.attr("transform","translate(80,0)")
-
-*/
-
-
-
-/*
-var svg2 = d3.select("body")
-			.append("svg")
-			.attr("width", width)
-			.attr("height", height/2);
-
-
-
-  // X axis: scale and draw:
-  var x = d3.scaleLinear()
-      .domain([0, 1000])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
-      .range([0, width]);
-  svg2.append("g")
-      .attr("transform", "translate(0," + 0 + ")")
-      .call(d3.axisBottom(x));
-
-  // set the parameters for the histogram
-  var histogram = d3.histogram()
-      .value(function(dlist) { return dlist.value;
-      console.log(dlist.value) })   // I need to give the vector of value
-      .domain(x.domain())  // then the domain of the graphic
-      .thresholds(x.ticks(70)); // then the numbers of bins
-
-  // And apply this function to data to get the bins
-  var bins = histogram(data);
-
-  // Y axis: scale and draw:
-  var y = d3.scaleLinear()
-      .range([height, 0]);
-      y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
-  svg2.append("g")
-      .call(d3.axisLeft(y));
-
-  // append the bar rectangles to the svg element
-  svg2.selectAll("rect")
-      .data(bins)
-      .enter()
-      .append("rect")
-        .attr("x", 1)
-        .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(0) + ")"; })
-        .attr("width", function(d) { return 10; })
-        .attr("height", function(d) { return 10 })
-        .style("fill", "#69b3a2")
-*/
 
 var svg2 = d3.select("body")
 			.append("svg")
 			.attr("width", 1500)
 			.attr("height", 500)
 			.attr("class", "bar-chart");
-var barPadding = 5;  
+var barPadding = 5;
 var barWidth = (width / dlist.length);
 
-var barChart = svg2.selectAll("rect")  
-    .data(dlist)  
-    .enter()  
-    .append("rect")  
+var barChart = svg2.selectAll("rect")
+    .data(dlist)
+    .enter()
+    .append("rect")
     .attr("y", function(d) {
     	if(d.value>0){
-    		return 380 - d.value/3-5 
+    		return 380 - d.value/3-5
     	}  else{
-    		return 380 - d.value/3 
+    		return 380 - d.value/3
     	}
-        
-    })  
-    .attr("height", function(d) { 
-    if(d.value>0){ 
+
+    })
+    .attr("height", function(d) {
+    if(d.value>0){
         return d.value/3+5;  }
         else{
-        	return d.value/3; 
+        	return d.value/3;
         }
-    })  
-    .attr("width", barWidth - barPadding)  
-    .attr("transform", function (d, i) {  
-         var translate = [barWidth * i, 0];  
-         return "translate("+ translate +")";  
+    })
+    .attr("width", barWidth - barPadding)
+    .attr("transform", function (d, i) {
+         var translate = [barWidth * i, 0];
+         return "translate("+ translate +")";
     });
 
 
@@ -337,7 +242,7 @@ var barChart = svg2.selectAll("rect")
 			.attr("y",400)
 			.text(function(d){return d.key})
 
-			
+
 			.attr("transform", function (d, i) {
 
 
@@ -354,7 +259,7 @@ return" translate("+ translate +")"+"rotate(-90) ";
 
 
 
-		
+
 // Bind the data to the SVG and create one path per GeoJSON feature
 svg.selectAll("path")
 	.data(json.features)
@@ -379,7 +284,7 @@ svg.selectAll("path")
 })
 	.style("opacity", 0.85);
 
-		 
+
 // Map the cities I have lived in!
 d3.csv("aircraft_incidents.csv", function(data) {
 
@@ -387,8 +292,12 @@ svg.selectAll("circle")
 	.data(data)
 	.enter()
 	.append("circle")
+    .attr("id", "data-points")
+    .attr('year', function(d){
+        return parseInt(d.Event_Date.slice(-2)) + 10;
+    })
 	.attr("cx", function(d) {
-		
+
 		if(d.Latitude&& d.Longitude ){
 			//console.log(d.Accident_Number)
 			return projection([d.Longitude, d.Latitude])[0];
@@ -401,17 +310,17 @@ svg.selectAll("circle")
 	.attr("r", function(d) {
 		return Math.sqrt(8) ;
 	})
-		.style("fill", "rgb(6,91,217)")	
-		.style("opacity", 0.7)	
+		.style("fill", "rgb(6,91,217)")
+		.style("opacity", 0.7)
 
-	// Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks" 
+	// Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks"
 	// http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
-	.on("mouseover", function(d) {      
-    	div.transition()        
-      	   .duration(200)      
-           .style("opacity", .9);      
+	.on("mouseover", function(d) {
+    	div.transition()
+      	   .duration(200)
+           .style("opacity", .9);
            div.text(d.Accident_Number)
-           .style("left", (d3.event.pageX) + "px")     
+           .style("left", (d3.event.pageX) + "px")
            .style("top", (d3.event.pageY - 28) + "px")
            .style("font-size", "10px");
 
@@ -431,14 +340,36 @@ svg.selectAll("circle")
 
 
 
-    // fade out tooltip on mouse out               
-    .on("mouseout", function(d) {       
-        div.transition()        
-           .duration(500)      
-           .style("opacity", 0);   
+    // fade out tooltip on mouse out
+    .on("mouseout", function(d) {
+        div.transition()
+           .duration(500)
+           .style("opacity", 0);
     });
 
+    d3.select("form")
+        .append('p')
+        .append('button')
+        .style("border", "1px solid black")
+        .text('Filter Data')
+        .on('click', function() {
 
+
+            svg.selectAll('circle')
+                .filter(function(d) {
+                    //console.log((parseInt(d["Event_Date"].slice(-2)) + 10)%100);
+                    return ((parseInt(d["Event_Date"].slice(-2)) + 10)%100) >= ((parseInt(document.getElementById('cutoff').value) +10)%100)})
+                .style('fill', 'black');
+
+            svg.selectAll('circle')
+                .filter(function(d) {return ((parseInt(d["Event_Date"].slice(-2)) + 10)%100) < ((parseInt(document.getElementById('cutoff').value) +10)%100)})
+                .transition()
+                .style("fill", "rgb(6,91,217)")
+                .style("opacity", 0.7)
+
+
+
+        });
 
 
 
@@ -516,12 +447,12 @@ function create_basic_info(index) {
     }
 
 
-});  
-  
+});
 
 
 
-     
+
+
 // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
 var legend = d3.select("body").append("svg")
       			.attr("class", "legend")
