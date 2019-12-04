@@ -294,7 +294,7 @@ var svg2 = d3.select("body")
 var svg2 = d3.select("body")
 			.append("svg")
 			.attr("width", 1500)
-			.attr("height", 430)
+			.attr("height", 500)
 			.attr("class", "bar-chart");
 var barPadding = 5;  
 var barWidth = (width / dlist.length);
@@ -340,7 +340,9 @@ var barChart = svg2.selectAll("rect")
 			
 			.attr("transform", function (d, i) {
 
-var translate = [barWidth * i, 0];
+
+
+var translate = [barWidth * i-395, +440];
 return" translate("+ translate +")"+"rotate(-90) ";
 
     })
