@@ -6,7 +6,12 @@
 <style type="text/css">
 .selected {
     fill: darkblue !important;
-    r: 10;
+    r: 8;
+}
+
+.rotated {
+	
+    transform: rotate(-20deg);
 }
 
 #map {
@@ -16,6 +21,13 @@
     border: 1px solid red;
 }
 #basic_info {
+
+    float:left;
+    overflow: hidden; /* if you don't want #second to wrap below #first */
+}
+
+
+#viz_3 {
 
     float:left;
     overflow: hidden; /* if you don't want #second to wrap below #first */
@@ -67,7 +79,7 @@ body {
             <strong>Total Serious Injuries:</strong> <span id="Total_Serious_Injuries"></span><br/>
             <strong>Total Uninjured:</strong> <span id="Total_Uninjured"></span><br/>
         </div>
-
+        <div id="viz_3"></div>
 </body>
 <script type="text/javascript">
 
@@ -281,10 +293,10 @@ var svg2 = d3.select("body")
 
 var svg2 = d3.select("body")
 			.append("svg")
-			.attr("width", width)
-			.attr("height", 380)
+			.attr("width", 1500)
+			.attr("height", 430)
 			.attr("class", "bar-chart");
-var barPadding = 2;  
+var barPadding = 5;  
 var barWidth = (width / dlist.length);
 
 var barChart = svg2.selectAll("rect")  
@@ -311,6 +323,30 @@ var barChart = svg2.selectAll("rect")
          var translate = [barWidth * i, 0];  
          return "translate("+ translate +")";  
     });
+
+
+    svg2.selectAll("text")
+		.data(dlist)
+		.enter()
+			.append("text")
+
+			.attr("text-anchor","middle")
+			.attr("fill","black")
+			//.attr("transform", "rotate(40)")
+			//.attr("x",function(d,i){return i*80+30})
+			.attr("y",400)
+			.text(function(d){return d.key})
+
+			
+			.attr("transform", function (d, i) {
+
+var translate = [barWidth * i, 0];
+return" translate("+ translate +")"+"rotate(-90) ";
+
+    })
+
+
+
 
 
 
@@ -407,7 +443,7 @@ svg.selectAll("circle")
     function create_bar(index) {
         d3.select("#selected_bar").remove();
 
-        var svg3 = d3.select("body")
+        var svg3 = d3.select("#viz_3")
             .append("svg")
             .attr("width", width)
             .attr("height", 380)
