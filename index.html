@@ -73,18 +73,12 @@ body {
 </style>
 </head>
 <body>
-<<<<<<< HEAD
     <button id="filter">Filter</button>
     <button id="reset_filter">Reset Filter</button>
     <form>
         Cutoff of Year (Ex. 01 or 95)<input id="cutoff" type="text" >
     </form>
 
-=======
-    <form>
-        Cutoff of Year (Ex. 01 or 95)<input id="cutoff" type="text" ><br>
-    </form>
->>>>>>> b970055a1246e67155a80923f3408e5554317d31
 	<div id="map"></div>
     
 	<div id="basic_info">
@@ -210,17 +204,10 @@ for(var key in countObj) {
 }
 
 var dlist = d3.entries(countObj);
-<<<<<<< HEAD
 
 
 
 
-=======
-
-
-
-
->>>>>>> b970055a1246e67155a80923f3408e5554317d31
 var svg2 = d3.select("body")
 			.append("svg")
 			.attr("width", 1500)
@@ -318,10 +305,7 @@ svg.selectAll("circle")
 	.enter()
 	.append("circle")
     .attr("id", "data-points")
-<<<<<<< HEAD
     .attr("class", "norm")
-=======
->>>>>>> b970055a1246e67155a80923f3408e5554317d31
     .attr('year', function(d){
         return parseInt(d.Event_Date.slice(-2)) + 10;
     })
@@ -376,44 +360,21 @@ svg.selectAll("circle")
            .style("opacity", 0);
     });
 
-<<<<<<< HEAD
     d3.select("#filter")
 
         .on('click', function() {
 
-svg.selectAll(".filtered")
-                    .transition()
-                  .attr("class", "norm");
-=======
-    d3.select("form")
-        .append('p')
-        .append('button')
-        .style("border", "1px solid black")
-        .text('Filter Data')
-        .on('click', function() {
 
-
->>>>>>> b970055a1246e67155a80923f3408e5554317d31
             svg.selectAll('circle')
                 .filter(function(d) {
                     //console.log((parseInt(d["Event_Date"].slice(-2)) + 10)%100);
                     return ((parseInt(d["Event_Date"].slice(-2)) + 10)%100) >= ((parseInt(document.getElementById('cutoff').value) +10)%100)})
-<<<<<<< HEAD
                 .classed("filtered",function() {
 
                               return true;
                             
                         });
 
-=======
-                .style('fill', 'black');
-
-            svg.selectAll('circle')
-                .filter(function(d) {return ((parseInt(d["Event_Date"].slice(-2)) + 10)%100) < ((parseInt(document.getElementById('cutoff').value) +10)%100)})
-                .transition()
-                .style("fill", "rgb(6,91,217)")
-                .style("opacity", 0.7)
->>>>>>> b970055a1246e67155a80923f3408e5554317d31
 
             
 
@@ -435,9 +396,6 @@ svg.selectAll(".filtered")
                   .attr("class", "norm");
           });
     
-
-
-        });
 
 
 
