@@ -208,64 +208,6 @@ var dlist = d3.entries(countObj);
 
 
 
-var svg2 = d3.select("body")
-			.append("svg")
-			.attr("width", 1500)
-			.attr("height", 500)
-			.attr("class", "bar-chart");
-var barPadding = 5;
-var barWidth = (width / dlist.length);
-
-var barChart = svg2.selectAll("rect")
-    .data(dlist)
-    .enter()
-    .append("rect")
-    .attr("y", function(d) {
-    	if(d.value>0){
-    		return 380 - d.value/3-5
-    	}  else{
-    		return 380 - d.value/3
-    	}
-
-    })
-    .attr("height", function(d) {
-    if(d.value>0){
-        return d.value/3+5;  }
-        else{
-        	return d.value/3;
-        }
-    })
-    .attr("width", barWidth - barPadding)
-    .attr("transform", function (d, i) {
-         var translate = [barWidth * i, 0];
-         return "translate("+ translate +")";
-    });
-
-
-    svg2.selectAll("text")
-		.data(dlist)
-		.enter()
-			.append("text")
-
-			.attr("text-anchor","middle")
-			.attr("fill","black")
-			//.attr("transform", "rotate(40)")
-			//.attr("x",function(d,i){return i*80+30})
-			.attr("y",400)
-			.text(function(d){return d.key})
-
-
-			.attr("transform", function (d, i) {
-
-
-
-var translate = [barWidth * i-395, +440];
-return" translate("+ translate +")"+"rotate(-90) ";
-
-    })
-
-
-
 
 
 
